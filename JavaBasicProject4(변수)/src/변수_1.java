@@ -121,6 +121,10 @@ public class 변수_1 {
 		// 변수 : 변경해서 다시 사용이 가능 , 변경할 수 없는 상수
 		char c='B';// 변수
 		c='D';
+		System.out.println(Integer.toHexString(255));
+		System.out.println(Integer.toOctalString(255));
+		System.out.println(0xff);
+		System.out.println(0377);
 
 	}
 

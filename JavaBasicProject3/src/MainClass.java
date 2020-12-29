@@ -52,6 +52,8 @@
  *     1) 클래스명 : 대문자 시작 
  *     2) 변수명 : 소문자 시작
  *     3) 메소드명 : 소문자 시작 
+ *     
+ *     github.com/chaijewon
  */
 public class MainClass {
     // 자동으로 첫번째 읽어서 처리 (main=>모든 프로그램에 한개 이상은 존재)
