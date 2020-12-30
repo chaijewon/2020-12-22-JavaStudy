@@ -16,11 +16,42 @@
  *              i++; => i=2 i=3 i=4 i=5 i=6
  *         }while(i<=5); 2<=5 true 3<=5 true  4<=5 true  5<=5 true 6<=5 false => 종료
  */
+// 1~10까지 출력 
+// while(i<=10)';' 
+// while(조건식) => 생략할 수 없다  ==> true
 public class 반복문_doWhile {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
+        // 1. 초기값 
+		int i=10;
+		do
+		{
+			// 2. 반복으로 수행되는 문장 
+			System.out.println("i="+i);
+			// i값을 증가 i=1~i=10
+			i++;
+		}while(i<=5);
+		
+		int j=10;// 한번도 수행을 못할 수도 있다
+		while(j<=5)
+		{
+			System.out.println("Hello");
+			i++;
+		}
+		
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
