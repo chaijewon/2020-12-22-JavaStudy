@@ -59,13 +59,87 @@ public class 메소드활용_5 {
 		
 	}
 	// 3. 노래 찾기
-	// 4. 가수명으로 노래찾기 
+	static void musicFindData()
+	{
+		Scanner scan=new Scanner(System.in);
+		System.out.print("노래 검색:");
+		String ss=scan.next();
+		String[] title=메소드활용_4.title;
+		System.out.println("************************ 검색결과 **************************");
+		for(String s:title)
+		{
+			if(s.contains(ss))
+			{
+				System.out.println(s);
+			}
+		}
+	}
+	// 4. 가수명으로 노래찾기
+	static void singerFindData()
+	{
+		Scanner scan=new Scanner(System.in);
+		System.out.print("가수명 입력:");
+		String s=scan.next();
+		String[] title=메소드활용_4.title;
+		String[] singer=메소드활용_4.singer;// index번호 
+		System.out.println("************************ 검색결과 **************************");
+		for(int i=0;i<50;i++)
+		{
+			if(singer[i].startsWith(s))
+			{
+				System.out.println(title[i]);
+			}
+		}
+	}
 	// 5. 상세보기 
+	static String[] detailData()
+	{
+		String[] result=new String[4];
+		Scanner scan=new Scanner(System.in);
+		String[] title=메소드활용_4.title;
+		System.out.println("======================== 선택 목록 ==============================");
+		for(int i=0;i<50;i++)
+		{
+			System.out.println((i+1)+"."+title[i]);
+		}
+		System.out.print("내용볼 번호를 선택하세요(1~50):");
+		int selNum=scan.nextInt();
+		//System.out.println("==========================================================");
+		String mTitle=메소드활용_4.title[selNum-1];
+		String singer=메소드활용_4.singer[selNum-1];
+		String album=메소드활용_4.album[selNum-1];
+		String state=메소드활용_4.state[selNum-1];
+		int modify=메소드활용_4.modify[selNum-1];
+		
+		//System.out.println("노래명:"+mTitle);
+		//System.out.println("가수명:"+singer);
+		//System.out.println("앨범:"+album);
+		String ss="";
+		if(state.equals("상승"))
+		{
+			ss="▲"+modify;
+		}
+		else if(state.equals("하강"))
+		{
+			ss="▽"+modify;
+		}
+		else // 유지
+		{
+			ss="-";
+		}
+		//System.out.println("등폭:"+ss);
+		//System.out.println("==========================================================");
+		result[0]=mTitle;
+		result[1]=singer;
+		result[2]=album;
+		result[3]=ss;
+		return result;
+	}
 	// 6. 종료
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-        while(true)
+	// 조립=> 재사용 
+	static void process()
+	{
+		while(true)
         {
         	int m=menu();
         	switch(m)
@@ -73,12 +147,29 @@ public class 메소드활용_5 {
         	case 1:
         		musicAllData();
         		break;
+        	case 2:
+        		musicFindData();
+        		break;
+        	case 3:
+        		singerFindData();
+        		break;
+        	case 4:
+        		String[] s=detailData();
+        		System.out.println("노래명:"+s[0]);
+        		System.out.println("가수명:"+s[1]);
+        		System.out.println("앨범:"+s[2]);
+        		System.out.println("등폭:"+s[3]);
+        		break;
         	case 5:
         		System.out.println("프로그램 종료");
         		System.exit(0);// 프로그램 종료
         		//break;
         	}
         }
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        process();
 	}
 
 }
