@@ -159,7 +159,7 @@ public class MovieSystem {
 		             38,7,7,15,15
 		};
    // 기능처리=> 메소드 
-   // 전체 목록 출력 
+   
    Movie[] movieAllData()
    {
 	   Movie[] m=new Movie[50];// Movie[] m={null,....}
@@ -202,6 +202,7 @@ public class MovieSystem {
 	   return m;
 	   
    }
+   // DAO
    // 가수명으로 노래 찾기 
    String[] singerFindData(String sing)
    {

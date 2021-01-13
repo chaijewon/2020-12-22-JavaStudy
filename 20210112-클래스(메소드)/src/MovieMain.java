@@ -3,6 +3,7 @@ public class MovieMain {
    public static void main(String[] args) {
 	  // 데이터 받기 
 	  MovieSystem ms=new MovieSystem();// movieAllData() 저장 
+	  
 	  Movie[] m=ms.movieAllData();
 	  // 출력 
 	  int i=1;
@@ -45,6 +46,8 @@ public class MovieMain {
 		  System.out.println(sss);
 		  System.out.println("===========================================");
 	  }*/
+	  System.out.printf("%d %d %d %d %d\n",10,20,30,40,50);// 가변형 매개변수 
+	  // int...
    }
 }
 
