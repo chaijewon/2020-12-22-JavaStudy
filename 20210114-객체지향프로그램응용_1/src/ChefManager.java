@@ -21,6 +21,7 @@ import org.jsoup.select.Elements;
 public class ChefManager {
     public Chef[] chefAllData()
     {
+    	
     	Chef[] chef=new Chef[500];
     	try
     	{

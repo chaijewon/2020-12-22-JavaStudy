@@ -18,7 +18,7 @@ public class RecipeSite {
     	{
     		// 정상수행문장 
     		// 파일을 읽어서 문자열로 저장 
-    		FileReader fr=new FileReader("c:\\javaDev\\aa.json");
+    		FileReader fr=new FileReader("c:\\javaDev\\recipe.json");
     		int i=0;// 단점 => 1글자를 읽는다 => 문자번호 
     		// -1은 파일의 끝 (EOF , BOF)
     		while((i=fr.read())!=-1)
@@ -30,8 +30,10 @@ public class RecipeSite {
     		String json=data.toString();
     		System.out.println(json);
     		JSONParser parser=new JSONParser();
+    		// class JSONObject extends Object
     		JSONObject re=(JSONObject)parser.parse(json);
     		System.out.println("re="+re);
+    		// JSONArray  extends Object
     		JSONArray arr=(JSONArray)re.get("recipe");
     		System.out.println("arr="+arr);
     		System.out.println(arr.size());
@@ -59,7 +61,7 @@ public class RecipeSite {
     		
     	}catch(Exception ex){
     		// 에러가 날 경우을 대비하는 프로그램 
-    		//ex.printStackTrace();
+    		ex.printStackTrace();
     	}
     	return recipe;
     }
