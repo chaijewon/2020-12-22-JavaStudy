@@ -5,13 +5,47 @@ import java.io.FileReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
+/*
+ *   ================================
+ *    1. 클래스 : public 
+ *    2. 생성자 : public 
+ *    3. 메소드 : public , protected
+ *    4. 변수 : private
+ *       = 지역변수 : final 
+ *   =================================
+ *   static , abstract , final 
+ *   
+ *   클래스 : public ,(default) , final , abstract
+ *           = public class
+ *           = class 
+ *           
+ *           예)
+ *               => 일반 클래스 
+ *               public class className{
+ *               }
+ *               
+ *               => 종단 클래스 (상속하지 않는다) => 품절(거의 사용빈도 없다)
+ *               public final class className{
+ *               }
+ *               
+ *               => 추상 클래스 (자신이 메모리 할당을 할 수 없다) => new를 사용하지 않는다
+ *               public abstract class className{
+ *               }
+ *               
+ *               => public static class className(사용할 수 없다)
+ *                   only public, abstract & final
+ *   메소드 : public , protected , abstract , static , final 
+ *   변수 : private , static , final 
+ */
 public class MovieManager {
+	// public MovieManager(){}
+	
    public MovieVO[] movieAllData()
    {
 	   MovieVO[] movie=new MovieVO[7];// 데이터를 7개 모아서 main으로 전송
+	   System.out.println("MovieManager:"+movie);
 	   try
-   	{
+   	  {
    		FileReader fr=new FileReader("c:\\javaDev\\movie.json"); // movie.json파일안에 7개의 영화데이터
    		String data="";
    		int i=0;// 문자 번호 => 'A' => 65
