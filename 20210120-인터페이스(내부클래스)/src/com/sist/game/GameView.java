@@ -14,6 +14,7 @@ public class GameView extends JPanel{
     Image back,avata;
     // 초기값 => 구현 : 초기화 블럭 , 생성자
     int x=100,y=300;
+    
     public GameView()
     {
     	back=Toolkit.getDefaultToolkit().getImage("c:\\javaDev\\back.jpg");
@@ -41,6 +42,7 @@ public class GameView extends JPanel{
     {
     	AvataMove a=new AvataMove();
     	a.start();
+    	
     }
     // 윈도우 그림을 그린다 
 	class AvataMove extends Thread
@@ -50,6 +52,7 @@ public class GameView extends JPanel{
 			setImage();
 			avata=Toolkit.getDefaultToolkit().getImage("c:\\javaDev\\player\\my_00.png");
 			repaint();
+			interrupt();
 		}
 	}
     
