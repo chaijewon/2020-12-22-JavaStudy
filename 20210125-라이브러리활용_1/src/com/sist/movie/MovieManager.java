@@ -50,7 +50,7 @@ public class MovieManager {
 			   movie[i].setRegdate(vo[5]);
 			   movie[i].setGrade(vo[6]);
 			   movie[i].setDirector(vo[7]);
-			   
+			   //System.out.println("오류:"+(i+1));
 			   /*
 			    *    ^ : 부정 , 시작    [^A-Z]:알파벳 대문자 제외 , ^[A-Z] : 대문자로 시작
 			    *    $ : 끝 [0-9] : 숫자로 끝난 문자열
@@ -64,7 +64,7 @@ public class MovieManager {
 			    */
 			   i++;
 		   }
-	   }catch(Exception ex){}
+	   }catch(Exception ex){ex.printStackTrace();}
    }
    
    /*
@@ -86,6 +86,23 @@ public class MovieManager {
 	   {
 		   m=new MovieVO[movie.length%10];
 	   }
+	   
+	   int j=0;// 10개씩 나눠주는 변수 
+	   int rowSize=10;
+	   int pagecnt=(rowSize*page)-rowSize;// 페이지의 시작점 
+	   /*
+	    *   1page => 0~9
+	    *   2page => 10~19
+	    */
+	   for(int i=0;i<movie.length;i++)
+	   {
+		   if(j<10 && i>=pagecnt)
+		   {
+			   m[j]=movie[i];
+			   j++;
+		   }
+	   }
+	   
 	   return m;
    }
    // 두번째 => 총페이지 
@@ -95,6 +112,15 @@ public class MovieManager {
 	   int total=(int)(Math.ceil(count/10.0)); // 1938/10.0  => 193.8(0이상=> 올림) => 194
 	   return total;
    }
+   // 영화 상세보기 => MovieVO (영화 1개에 대한 모든 정보) => ArrayList,Vector(컬렉션)
+   public static MovieVO movieDetailData(int mno)
+   {
+	   MovieVO vo=new MovieVO();
+	   // vo에 값을 채운다 
+	   vo=movie[mno-1];// 영화번호=> 1번부터 , 배열의 인덱스=>0번부터 
+	   return vo;
+   }
+   
 }
 
 

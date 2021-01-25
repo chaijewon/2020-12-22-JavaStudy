@@ -22,7 +22,38 @@ public class UserMain {
         	break;
         }
         System.out.println("===========현재 보고 있는 페이지는 "+page+"페이지 입니다=============");
+        MovieVO[] movie=MovieManager.movieListData(page);
+        for(MovieVO vo:movie)
+        {
+        	if(vo==null) break;
+        	System.out.println("영화번호:"+vo.getMno());
+        	System.out.println("영화명:"+vo.getTitle());
+        	//System.out.println("장르:"+vo.getGenre());
+        	//System.out.println("감독:"+vo.getDirector());
+        	//System.out.println("출연:"+vo.getActor());
+        	//System.out.println("등급:"+vo.getGrade());
+        	//System.out.println("개봉일:"+vo.getRegdate());
+        	System.out.println("============================================================");
+        }
+        System.out.print("영화 상세 볼 영화번호를 입력하세요?");
+        int detail_no=scan.nextInt();
+        MovieVO vo=MovieManager.movieDetailData(detail_no);
+        System.out.println("==================="+vo.getTitle()+" 상세보기======================");
+        System.out.println("영화번호:"+vo.getMno());
+    	System.out.println("영화명:"+vo.getTitle());
+    	System.out.println("장르:"+vo.getGenre());
+    	System.out.println("감독:"+vo.getDirector());
+    	System.out.println("출연:"+vo.getActor());
+    	System.out.println("등급:"+vo.getGrade());
+    	System.out.println("개봉일:"+vo.getRegdate());
         
 	}
 
 }
+
+
+
+
+
+
+
