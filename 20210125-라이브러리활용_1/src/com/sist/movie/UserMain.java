@@ -13,7 +13,8 @@ public class UserMain {
         while(true)
         {
         	System.out.print("영화 목록을 볼 페이지 지정(1~"+totalpage+"):");
-        	page=scan.nextInt();
+        	String s=scan.next();
+        	page=Integer.parseInt(s); // 문자열 정수형으로 변경 => 문자열 변경 => String.valueOf()
         	if(page<1 || page>totalpage)
         	{
         		System.out.println("존재하지 않는 페이지 입니다!!");
@@ -46,6 +47,26 @@ public class UserMain {
     	System.out.println("출연:"+vo.getActor());
     	System.out.println("등급:"+vo.getGrade());
     	System.out.println("개봉일:"+vo.getRegdate());
+    	System.out.println("============================================================");
+    	System.out.print("출연자 이름을 입력:");
+    	String name=scan.next();
+    	String[] title=MovieManager.movieFindData(name.trim());
+    	for(String t:title)
+    	{
+    		System.out.println(t);
+    	}
+    	System.out.println("============================================================");
+    	System.out.print("영화명 입력:");
+    	String str=scan.next();
+    	title=MovieManager.findTitleData(str.trim()); // trim()은 좌우의 공백문제 제거 
+    	for(String t:title)
+    	{
+    		System.out.println(t);
+    		try
+    		{
+    			Thread.sleep(100); // Check Exception => 잠시멈춤 
+    		}catch(Exception ex) {}
+    	}
         
 	}
 

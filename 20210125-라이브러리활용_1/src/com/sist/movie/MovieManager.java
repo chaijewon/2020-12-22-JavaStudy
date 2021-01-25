@@ -3,7 +3,7 @@ import java.io.*;
 // String/StringBuffer
 public class MovieManager {
    // 모든 사용자(user)가 같은 영화정보를 공유한다 
-   private static MovieVO[] movie=new MovieVO[1938];
+   private static MovieVO[] movie=new MovieVO[1938]; // 싱글턴 
    // 1. 파일에서 데이터를 읽어서 배열에 저장 => 초기화 
    /*
     *   1. 명시적 초기화 
@@ -120,6 +120,68 @@ public class MovieManager {
 	   vo=movie[mno-1];// 영화번호=> 1번부터 , 배열의 인덱스=>0번부터 
 	   return vo;
    }
+   /*
+    *    1. 목록 => 영화 정보 여러개 => 한개로 묶어서 전송 
+    *                              =========== MovieVO[]
+    *    2. 영화 1개의 상세 보기 => MovieVO
+    *    
+    *    3. 영화명만 출력 (여러개: String[] ,한개: String)
+    *    
+    *    클래스 : 여러개의 다른 데이터를 묶어서 관리하는 데이터형 
+    *           ================= 사람:한명에 대한 모든 정보 , 영화 : 영화 한개에 정보 
+    */
+   // 출연자로 => 영화 제목 출력 : contains 
+   //public static String[]
+   public static String[] movieFindData(String actor)
+   {
+	   /// 배열을 선언 하기 위한 총 갯수를 확인 
+	   // 배열단점은 고정 데이터 (가변이 아니다..) : 컬렉션 
+	   int count=0;
+	   for(MovieVO vo:movie)
+	   {
+		   if(vo.getActor().contains(actor))
+		   {
+			   count++;
+		   }
+	   }
+	   
+	   String[] movie_title=new String[count];
+	   int i=0;
+	   for(MovieVO vo:movie)
+	   {
+		   if(vo.getActor().contains(actor))
+		   {
+			   movie_title[i]=vo.getTitle();
+			   i++;
+		   }
+	   }
+	   return movie_title;
+   }
+   // 영화명 => 영화 찾기 : contains
+   public static String[] findTitleData(String title)
+   {
+	   int count=0;
+	   for(MovieVO vo:movie)
+	   {
+		   if(vo.getTitle().startsWith(title))
+		   {
+			   count++;
+		   }
+	   }
+	   String[] movie_title=new String[count];
+	   int i=0;
+	   for(MovieVO vo:movie)
+	   {
+		   if(vo.getTitle().startsWith(title))
+		   {
+			   movie_title[i]=vo.getTitle();
+			   i++;
+		   }
+		   
+	   }
+	   return movie_title;
+   }
+   // 시작하는 영화명 찾기 : startsWith,endsWith
    
 }
 
