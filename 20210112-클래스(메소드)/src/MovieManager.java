@@ -103,6 +103,7 @@ public class MovieManager {
      // finally => 파일 닫기 , 오라클 서버 연결 해제 , 네트워크 서버 
          return list;
     }
+    
     public void daumNewsData()
     {
     	try
