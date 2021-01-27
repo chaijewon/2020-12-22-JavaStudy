@@ -28,6 +28,14 @@ public class NewsForm extends JPanel implements ActionListener{
 	   
 	   p.setLayout(new GridLayout(5, 1));
 	   
+	   ArrayList list=mgr.newsListData(curpage);
+	   for(int i=0;i<list.size();i++)
+	   {
+		   NewsVO vo=(NewsVO)list.get(i);
+		   NewsCard nc=new NewsCard();
+		   nc.newsPrint(vo);
+		   p.add(nc);
+	   }
 	   
 	   add("Center",pp);
 	   b1=new JButton("이전");
@@ -45,7 +53,49 @@ public class NewsForm extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource()==b1)// 이전
+		{
+			if(curpage>1)
+			{
+				curpage--;
+				p.removeAll();
+				ArrayList list=mgr.newsListData(curpage);
+				for(int i=0;i<list.size();i++)
+				{
+					NewsVO vo=(NewsVO)list.get(i);
+				    NewsCard nc=new NewsCard();
+					nc.newsPrint(vo);
+					p.add(nc);
+				}
+				p.validate();
+				la.setText(curpage+" page / "+totalpage+" pages");
+			}
+		}
+		if(e.getSource()==b2)// 다음
+		{
+			if(curpage<totalpage)
+			{
+				curpage++;
+				p.removeAll();
+				ArrayList list=mgr.newsListData(curpage);
+				for(int i=0;i<list.size();i++)
+				{
+					NewsVO vo=(NewsVO)list.get(i);
+				    NewsCard nc=new NewsCard();
+					nc.newsPrint(vo);
+					p.add(nc);
+				}
+				p.validate();
+				la.setText(curpage+" page / "+totalpage+" pages");
+			}
+		}
 	}
 	
 }
+
+
+
+
+
+
+

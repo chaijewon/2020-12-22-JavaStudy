@@ -43,7 +43,7 @@ public class NewsManager {
    {
 	   ArrayList list=new ArrayList();
 	   int j=0;// 10개씩 나눠주는 변수   j<10
-	   int pagecnt=(page*10)-10;
+	   int pagecnt=(page*5)-5;
 	   /*
 	    *    1page : 0~9
 	    *    2page : 10~19
@@ -51,7 +51,7 @@ public class NewsManager {
 	    */
 	   for(int i=0;i<newsList.size();i++)
 	   {
-		   if(j<10 && i>=pagecnt)
+		   if(j<5 && i>=pagecnt)
 		   {
 			   NewsVO vo=(NewsVO)newsList.get(i);
 			   list.add(vo);
@@ -63,7 +63,7 @@ public class NewsManager {
    // 총페이지 
    public int newsTotalPage()
    {
-	   return (int)(Math.ceil(newsList.size()/10.0)); // ceil:올림함수 
+	   return (int)(Math.ceil(newsList.size()/5.0)); // ceil:올림함수 
 	   // 203/20.0 ==> 10.15  ==> ceil(10.15) ==> 11
    }
    public static void main(String[] args) {

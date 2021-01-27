@@ -37,7 +37,12 @@ public class NewsCard extends JPanel{
         try
         {
         	URL url=new URL(vo.getPoster());
-        	
+        	ImageIcon ii=new ImageIcon(url);
+        	Image img=getImage(ii, poster.getWidth(), poster.getHeight());
+        	poster.setIcon(new ImageIcon(img));
+        	title.setText(vo.getTitle());
+        	tp.setText(vo.getContent());
+        	author.setText(vo.getAuthor());
         }catch(Exception ex){}
     }
     public static Image getImage(ImageIcon ii,int w,int h)
