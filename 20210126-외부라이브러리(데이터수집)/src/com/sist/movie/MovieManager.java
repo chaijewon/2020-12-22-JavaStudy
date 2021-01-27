@@ -1,5 +1,7 @@
 package com.sist.movie;
 
+import java.io.FileWriter;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -77,12 +79,13 @@ public class MovieManager {
 	  {
 		  // 1. 웹서버(다음)에 연결해서 news에 대한 데이터를 읽기 시작 
 		  int k=1;
+		  String message="";
 		  for(int i=1;i<=15;i++)
 		  {
 		     Document doc=Jsoup.connect("https://movie.daum.net/magazine/new?tab=nws&regdate=20210126&page="+i).get();
 		      // Document => 문서 저장 공간
 		     Elements title=doc.select("strong.tit_line a");
-		     Elements content=doc.select("a.desc_line");
+		     Elements content=doc.select("span.cont_line a.desc_line");
 		     Elements author=doc.select("span.state_line");
 		     Elements poster=doc.select("span.thumb_img");
 		     Elements link=doc.select("a.link_txt");
@@ -93,9 +96,10 @@ public class MovieManager {
 		    	  *    <span>aaa</span>
 		    	  *    <img src="">
 		    	  */
+		    	 try {
 		    	 System.out.println("번호:"+k);
-		    	 System.out.println("제목:"+title.get(j).text());
-		    	 System.out.println("내용:"+content.get(j).text());
+		    	 System.out.println("제목:"+title.get(j).text().replace("\"", "").replace("\'", ""));
+		    	 System.out.println("내용:"+content.get(j).text().replace("\"", "").replace("\'", ""));//‘
 		    	 System.out.println("저자:"+author.get(j).text().replace("・", " "));
 		    	 String img=poster.get(j).attr("style");
 		    	 //System.out.println(img.indexOf("(")+1);
@@ -106,9 +110,31 @@ public class MovieManager {
 		    	 System.out.println("http:"+img);
 		    	 System.out.println("링크:"+link.get(j).attr("href"));
 		    	 System.out.println("=============================================");
+		    	 
+		    	 String msg=k+"|"
+		    			 +title.get(j).text().replace("\"", "").replace("\'", "")+"|"
+		    			 +content.get(j).text().replace("\"", "").replace("\'", "").replace("|", "")+" |"
+		    			 +author.get(j).text().replace("・", " ").replace("|", "")+"|"
+		    			 +"http:"+img+"|"
+		    			 +link.get(j).attr("href")+"\n";
+		    	//System.out.println(msg);	
+		    	 
+		    	 /*
+		    	  *    r : read 
+		    	  *    w : write => 새롭게 만든다 
+		    	  *    a : write+append =======> true
+		    	  */
+		    	 //msg=msg.substring(0,msg.lastIndexOf("\n"));
+		    	 message+=msg;
+		    	 
 		    	 k++;
+		    	 }catch(Exception ex) {ex.printStackTrace();}
 		     }
 		  }
+		     message=message.substring(0,message.lastIndexOf("\n"));
+		     FileWriter fw=new FileWriter("c:\\javaDev\\daum_news.txt",true);
+	    	 fw.write(message);
+	    	 fw.close();
 	  }catch(Exception ex)
 	  {
 		  ex.printStackTrace();
