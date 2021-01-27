@@ -27,21 +27,24 @@ public class NewsManager {
 		   {
 			   StringTokenizer st=new StringTokenizer(news,"|");
 			   NewsVO vo=new NewsVO();
+			   System.out.println(vo);
 			   vo.setNo(Integer.parseInt(st.nextToken()));
 			   vo.setTitle(st.nextToken());
 			   vo.setContent(st.nextToken());
 			   vo.setAuthor(st.nextToken());
 			   vo.setPoster(st.nextToken());
 			   vo.setLink(st.nextToken());
+			   //vo.setLink(st.nextToken());
 			   newsList.add(vo);
 			   
 		   }
+		   
 	   }catch(Exception ex){}
    }
    // 목록 출력 
    public ArrayList newsListData(int page)
    {
-	   ArrayList list=new ArrayList();
+	   ArrayList list=new ArrayList();// 가변형 
 	   int j=0;// 10개씩 나눠주는 변수   j<10
 	   int pagecnt=(page*5)-5;
 	   /*
@@ -51,6 +54,7 @@ public class NewsManager {
 	    */
 	   for(int i=0;i<newsList.size();i++)
 	   {
+		   if(j>4) break;
 		   if(j<5 && i>=pagecnt)
 		   {
 			   NewsVO vo=(NewsVO)newsList.get(i);
@@ -83,10 +87,35 @@ public class NewsManager {
 	    for(int i=0;i<list.size();i++)
 	    {
 	    	NewsVO vo=(NewsVO)list.get(i);
+	    	//Object obj=list.get(i);
+	    	
 	    	System.out.println(vo.getNo()+"."+vo.getTitle());
 	    }
+	    //Integer ii=100;
+	    //int i=ii;
 	    
 	    System.out.println("총페이지:"+m.newsTotalPage());
+	    /*
+	     *    class A
+	     *    {
+	     *        public String toString(){} //오버라이딩
+	     *        public void display(){}
+	     *    }
+	     *    
+	     *    Object obj=new A(); => Object가 가지고 있는 메소드중에 A클래스 오버라이딩된 것만 호출
+	     *    
+	     *    obj.toString()
+	     *    obj.display() (X)
+	     *    
+	     *    A a=(A)obj;
+	     *    a.toString();
+	     *    a.display();
+	     *    
+	     */
+	    String s="Hello"; // char[] s=new char[]{'H'...}
+	    // int[] arr={10,20,30..}
+	    // int[] arr=new int[]{}
+	    
    }
 }
 
