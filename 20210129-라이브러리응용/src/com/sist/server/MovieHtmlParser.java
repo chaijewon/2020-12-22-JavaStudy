@@ -32,24 +32,40 @@ public class MovieHtmlParser {
 		     String ss=s.substring(0,5); => Hello
 		     
 		     s="Hello Java";
+		     
+		     int a=10;
+		     int b=0;
+		     if(b==0)
+		     {
+		        System.out.println("0으로 나눌 수 없다")
+		     }
+		     int c=a/b;=> 종료
+		    
+		     오류 발생 => 예상 if => try
+		     
 		 */
 		StringBuffer sb=new StringBuffer();
+		// for안에 try=> 오류가 발생 => 제외하고 다시 for을 수행 
+		// web사이트 => 모든 정보를 출력하지 않는다
 		try
 		{
-			int mno=43;// 영화 고유 번호 
-			int cno=2;// 카테고리 번호 
-			for(int i=1;i<=3;i++)
+			int mno=171;// 영화 고유 번호 
+			int cno=5;// 카테고리 번호 
+			//for(int i=1;i<=7;i++)
 			{
-				Document doc=Jsoup.connect("https://movie.daum.net/premovie/released?reservationOnly=N&sort=reservation&page="+i).get();
+				Document doc=Jsoup.connect("https://movie.daum.net/boxoffice/yearly").get();
 			    Elements link=doc.select("div.wrap_desc a.desc_movie");
 			    for(int j=0;j<link.size();j++)
 			    {
+			      try
+			      {
 			    	System.out.println(link.get(j).attr("href"));
 			    	Document doc2=Jsoup.connect("https://movie.daum.net"+link.get(j).attr("href")).get();
 			    	// <span class="txt_name">소울(2020)</span>
 			    	Element title=doc2.selectFirst("span.txt_name");
 			    	System.out.println(title.text());
 			    	Element score=doc2.selectFirst("div.info_origin a");
+			    	
 			    	String s=score.text();
 			    	// 평점 07 . 8
 			    	// 01 234
@@ -105,6 +121,7 @@ public class MovieHtmlParser {
 			    			  +story.text()+"\r\n";
 			    	sb.append(msg);
 			    	mno++;
+			      }catch(Exception ex) {}
 			    	// 1999.11.20 개봉 2020.12.23 (재개봉) 116분, 전체관람가
 			    	// 2021.01.07 개봉 105분, 15세이상관람가
 			    	/*
@@ -132,7 +149,7 @@ public class MovieHtmlParser {
 			    	
 			    }
 			}
-			FileWriter fw=new FileWriter("c:\\javaDev\\daum_movie.txt");
+			FileWriter fw=new FileWriter("c:\\javaDev\\daum_movie.txt",true);
 			fw.write(sb.toString());
 			fw.close();
 		}catch(Exception ex)
