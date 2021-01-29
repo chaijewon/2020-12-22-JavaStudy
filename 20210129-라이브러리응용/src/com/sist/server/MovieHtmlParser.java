@@ -27,11 +27,17 @@ public class MovieHtmlParser {
 		/*
 		 *   <div class="wrap_desc">
 									<a href="/moviedb/main?movieId=135111"
+									
+		     String s="Hello Java";
+		     String ss=s.substring(0,5); => Hello
+		     
+		     s="Hello Java";
 		 */
+		StringBuffer sb=new StringBuffer();
 		try
 		{
-			int mno=1;// 영화 고유 번호 
-			int cno=1;// 카테고리 번호 
+			int mno=43;// 영화 고유 번호 
+			int cno=2;// 카테고리 번호 
 			for(int i=1;i<=3;i++)
 			{
 				Document doc=Jsoup.connect("https://movie.daum.net/premovie/released?reservationOnly=N&sort=reservation&page="+i).get();
@@ -50,6 +56,7 @@ public class MovieHtmlParser {
 			    	// s.indexOf("점") => 1+2
 			    	s=s.substring(s.indexOf("점")+3);
 			    	System.out.println(s.replace(" ", ""));
+			    	String ss=s.replace(" ", "");
 			    	// trim() : 공백문자 (좌우) => 중간에 있는 공백을 제거 => replace
 			    	Element genre=doc2.selectFirst("dd.txt_main");
 			    	System.out.println(genre.text());
@@ -61,6 +68,8 @@ public class MovieHtmlParser {
 			    	//1999.11.20  2020.12.23 
 			    	System.out.println(regdate.replaceAll("[가-힣]", "").
 			    			replace("(","").replace(")", ""));
+			    	regdate=regdate.replaceAll("[가-힣]", "").
+			    			replace("(","").replace(")", "");
 			    	String time=s.substring(0,s.indexOf(","));
 			    	time=time.substring(time.lastIndexOf(" ")+1);
 			    	// substring(int begin) => 해당위치
@@ -81,6 +90,21 @@ public class MovieHtmlParser {
 			    	
 			    	Element showUser=doc2.selectFirst("em.emph_g");
 			    	System.out.println(showUser.text());
+			    	
+			    	String msg=mno+"|"+cno+"|"
+			    			  +title.text()+"|"
+			    			  +ss+"|"
+			    			  +genre.text()+"|"
+			    			  +regdate+"|"
+			    			  +time+"|"
+			    			  +grade+"|"
+			    			  +director.text()+"|"
+			    			  +actor.text()+"|"
+			    			  +poster.attr("src")+"|"
+			    			  +showUser.text()+"|"
+			    			  +story.text()+"\r\n";
+			    	sb.append(msg);
+			    	mno++;
 			    	// 1999.11.20 개봉 2020.12.23 (재개봉) 116분, 전체관람가
 			    	// 2021.01.07 개봉 105분, 15세이상관람가
 			    	/*
@@ -108,6 +132,9 @@ public class MovieHtmlParser {
 			    	
 			    }
 			}
+			FileWriter fw=new FileWriter("c:\\javaDev\\daum_movie.txt");
+			fw.write(sb.toString());
+			fw.close();
 		}catch(Exception ex)
 		{
 			// 에러 메세지 출력 
