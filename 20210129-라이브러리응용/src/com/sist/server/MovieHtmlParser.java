@@ -4,6 +4,7 @@ import java.util.*; // 데이터 수집 => ArrayList
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.*;// 파일에 저장 =>
@@ -39,6 +40,49 @@ public class MovieHtmlParser {
 			    {
 			    	System.out.println(link.get(j).attr("href"));
 			    	Document doc2=Jsoup.connect("https://movie.daum.net"+link.get(j).attr("href")).get();
+			    	// <span class="txt_name">소울(2020)</span>
+			    	Element title=doc2.selectFirst("span.txt_name");
+			    	System.out.println(title.text());
+			    	Element score=doc2.selectFirst("div.info_origin a");
+			    	String s=score.text();
+			    	// 평점 07 . 8
+			    	// 01 234
+			    	// s.indexOf("점") => 1+2
+			    	s=s.substring(s.indexOf("점")+3);
+			    	System.out.println(s.replace(" ", ""));
+			    	// trim() : 공백문자 (좌우) => 중간에 있는 공백을 제거 => replace
+			    	Element genre=doc2.selectFirst("dd.txt_main");
+			    	System.out.println(genre.text());
+			    	
+			    	Element etc=doc2.select("dl.list_movie").get(1);
+			    	s=etc.text();
+			    	s=s.substring(s.indexOf("라")+2);
+			    	String regdate=s.substring(0,s.indexOf(",")-5);
+			    	//1999.11.20  2020.12.23 
+			    	System.out.println(regdate.replaceAll("[가-힣]", "").
+			    			replace("(","").replace(")", ""));
+			    	String time=s.substring(0,s.indexOf(","));
+			    	time=time.substring(time.lastIndexOf(" ")+1);
+			    	// substring(int begin) => 해당위치
+			    	// substring(int begin,int end) => end-1
+			    	System.out.println(time);
+			    	String grade=s.substring(s.lastIndexOf(",")+2);
+			    	System.out.println(grade);
+			    	Element director=doc2.select("a.link_person").get(0);
+			    	System.out.println(director.text());
+			    	Element actor=doc2.select("a.link_person").get(1);
+			    	System.out.println(actor.text());
+			    	
+			    	Element story=doc2.selectFirst("div.desc_movie p");
+			    	System.out.println(story.text());
+			    	
+			    	Element poster=doc2.selectFirst("span.thumb_img img");
+			    	System.out.println(poster.attr("src"));
+			    	
+			    	Element showUser=doc2.selectFirst("em.emph_g");
+			    	System.out.println(showUser.text());
+			    	// 1999.11.20 개봉 2020.12.23 (재개봉) 116분, 전체관람가
+			    	// 2021.01.07 개봉 105분, 15세이상관람가
 			    	/*
 			    	 *    <div class="aaa">
 			    	 *      <a href="http://~">link</a>
@@ -61,6 +105,7 @@ public class MovieHtmlParser {
 			    	 *    <a> => link 주소 
 			    	 *    <img src="">
 			    	 */
+			    	
 			    }
 			}
 		}catch(Exception ex)
