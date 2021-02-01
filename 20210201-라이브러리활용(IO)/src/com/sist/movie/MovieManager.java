@@ -16,6 +16,12 @@ public class MovieManager {
     		oos.close();
     	}catch(Exception ex){}
     }
+    // 기능 => 메소드 
+    // 1. 전체 목록 출력 => 페이지 나누기 
+    // 2. 카테고리별 출력 => 페이지 나누기
+    // 3. 검색 : 제목별  => 페이지 나누기 
+    // 4. 검색 : 장르별  => 페이지 나누기 => 사람이 한눈에 볼수 있는 화면(그림 15)
+    
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
         /*for(MovieVO vo:list)
