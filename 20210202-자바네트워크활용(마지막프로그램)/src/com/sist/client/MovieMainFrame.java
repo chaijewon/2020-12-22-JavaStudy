@@ -3,7 +3,17 @@ package com.sist.client;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-public class MovieMainFrame extends JFrame{
+/*
+ *    오라클 : 데이터 수집해서 저장하는 장소 
+ *    자바 : 오라클 연결 => 데이터를 브라우저에 전송 
+ *    자바스크립트 : 브라우저에서 이벤트 처리(버튼,검색,애니메이션)
+ *    HTML:화면 출력 
+ *          \n => <br>
+ *    CSS: 화면 디자인 (Layout)
+ *    
+ *    ==> JSP
+ */
+public class MovieMainFrame extends JFrame implements ActionListener{
 	
 	JMenuItem home=new JMenuItem("홈");
 	JMenuItem rmovie=new JMenuItem("현재상영영화");
@@ -13,8 +23,11 @@ public class MovieMainFrame extends JFrame{
 	JMenuItem mbox=new JMenuItem("월간");
 	JMenuItem ybox=new JMenuItem("연간");
 	
+	JMenuItem chat=new JMenuItem("채팅");
+	
 	CardLayout card=new CardLayout();
 	MovieHomeForm mhf=new MovieHomeForm();
+	ChatForm cf=new ChatForm();
     public MovieMainFrame()
     {
     	setLayout(card);
@@ -31,17 +44,25 @@ public class MovieMainFrame extends JFrame{
     	menu3.add(mbox);
     	menu3.add(ybox);
     	
+    	JMenu menu4=new JMenu("네트워크");
+    	menu4.add(chat);
+    	
     	bar.add(menu1);
     	bar.add(menu2);
     	bar.add(menu3);
-    	
+    	bar.add(menu4);
     	// 윈도우 추가
     	setJMenuBar(bar);
     	
     	// 화면 추가
     	add("HOME",mhf);
-    	setSize(1600, 1000);
+    	add("CHAT",cf);
+    	
+    	setSize(1024, 768);
     	setVisible(true);
+    	
+    	home.addActionListener(this);
+    	chat.addActionListener(this);
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -52,5 +73,23 @@ public class MovieMainFrame extends JFrame{
 		
 		 new MovieMainFrame();
 	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==home)
+		{
+			card.show(getContentPane(), "HOME");
+		}
+		if(e.getSource()==chat)
+		{
+			card.show(getContentPane(), "CHAT");
+		}
+	}
 
 }
+
+
+
+
+
+
