@@ -30,7 +30,7 @@ import java.util.*;// Collection(클라이언트의 정보를 저장=>동기화 
  *             => 웹 (session,cookie, request, response) => Spring,Mybatis (Map)
  */
 public class Server implements Runnable{
-    private Vector waitVc=new Vector();// 클라이언트 정보를 저장 
+    private Vector<Client> waitVc=new Vector<Client>();// 클라이언트 정보를 저장 
     private ServerSocket ss;
     private final int PORT=3355;
     /*
@@ -51,6 +51,13 @@ public class Server implements Runnable{
     		ex.printStackTrace();
     	}
     }
+    /*
+     *    동작 
+     *     1. 서버 가동 
+     *     2. 접속시 처리 
+     *        => 메모리에 저장(클라이언트의 정보를 저장)
+     *        => 클라이언트와 통신 명령 
+     */
     // 2. 접속시에 처리 => 클라이언트를 Vector에 저장 
     public void run()
     {
@@ -60,12 +67,16 @@ public class Server implements Runnable{
     		{
     			Socket s=ss.accept();// 발신자 정보(ip+port=Socket)를 가지고 온다 
     			// 쓰레드와 통신이 가능하게 => 쓰레드 생성 => 해당 클라이언트의 Socket을 넘겨준다 
+    			Client client=new Client(s); // 쓰레드마다 클라이언트를 담당한다
+    			waitVc.add(client);// 클라이언트 정보를 저장 
+    			client.start();// 클라이언트와 통신을 시작한다 
     		}
     	}catch(Exception ex){}
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+        Server server=new Server();// 서버 가동 
+        new Thread(server).start();// 접속시 처리 
 	}
 	// 통신을 담당하는 클래스 
 	class Client extends Thread
@@ -84,17 +95,52 @@ public class Server implements Runnable{
 			{
 				this.s=s;// s=클라이언트 
 				out=s.getOutputStream();
-				in=new BufferedReader(new InputStreamReader(s.getInputStream()));
+				in=new BufferedReader(new InputStreamReader(s.getInputStream(),"UTF-8"));
 			}catch(Exception ex) {}
 		}
 		// 통신 내용 
 		public void run()
 		{
-			
+			try
+			{
+				while(true)
+				{
+					// 사용자의 요청 내용을 받는다 
+					String msg=in.readLine();
+					messageAll(msg);
+				}
+			}catch(Exception ex){}
 		}
 		// 메세지 전송 메소드 
 		//1. 개인적으로 전송 => 쪽지보내기,귓속말 
+		/*
+		 * transient String name; => name은 제외
+		 * synchronized => 동기화
+		 * => 쓰레드의 default (비동기화)
+		 * 
+		 *    sync function aaa(){}
+		 *    async function bbb(){}
+		 *    ajax => 실시간 
+		 */
+		
+		public synchronized void messageTo(String msg)
+		{
+			try
+			{
+				out.write((msg+"\n").getBytes());
+			}catch(Exception ex){}
+		}
 		//2. 전체적으로 전송 => 채팅 
+		public synchronized void messageAll(String msg)
+		{
+			try
+			{
+				for(Client client:waitVc)
+				{
+					client.messageTo(msg);
+				}
+			}catch(Exception ex){}
+		}
 	}
 
 }
