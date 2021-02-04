@@ -3,6 +3,7 @@ package com.sist.common;
 // 웹 => 파일명 
 public class Function {
    public static final int LOGIN=100;
+   public static final int MYLOG=110;
    public static final int SENDMESSAGE=200;
    public static final int CHAT=300;
 }

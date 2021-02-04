@@ -13,8 +13,13 @@ import java.awt.event.*;
  *    
  *    ==> JSP
  */
+// 네트워크 관련 클래스 : Socket , BufferedReader , OutputStream , StringTokenizer
+import java.net.*;
+import java.util.*;
+import java.io.*;
 public class MovieMainFrame extends JFrame implements ActionListener{
 	
+	// Menu
 	JMenuItem home=new JMenuItem("홈");
 	JMenuItem rmovie=new JMenuItem("현재상영영화");
 	JMenuItem smovie=new JMenuItem("개봉예정영화");
@@ -26,8 +31,16 @@ public class MovieMainFrame extends JFrame implements ActionListener{
 	JMenuItem chat=new JMenuItem("채팅");
 	
 	CardLayout card=new CardLayout();
+	// 화면 UI
 	MovieHomeForm mhf=new MovieHomeForm();
 	ChatForm cf=new ChatForm();
+	// Login
+	Login login=new Login();
+	// 네트워크 
+	Socket s;
+	BufferedReader in;
+	OutputStream out;
+	String name;
     public MovieMainFrame()
     {
     	setLayout(card);
@@ -55,8 +68,9 @@ public class MovieMainFrame extends JFrame implements ActionListener{
     	setJMenuBar(bar);
     	
     	// 화면 추가
-    	add("HOME",mhf);
     	add("CHAT",cf);
+    	add("HOME",mhf);
+    	
     	
     	setSize(1024, 768);
     	setVisible(true);
