@@ -170,7 +170,8 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
     			  break;
     			  case Function.CHAT:
     			  {
-    				  
+    				  initStyle();
+    				  append(st.nextToken(),st.nextToken());
     			  }
     			  break;
     			}
