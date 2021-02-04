@@ -173,7 +173,11 @@ public class Server implements Runnable{
 					   break;
 					   case Function.CHAT://300  300|message
 					   {
-						   
+						  String strMsg=st.nextToken();
+						  String color=st.nextToken();
+						  
+						  // 접속한 모든 사람에게 보낸다 
+						  messageAll(Function.CHAT+"|["+name+"]"+strMsg+"|"+color);
 					   }
 					}
 					

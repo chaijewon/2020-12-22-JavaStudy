@@ -97,6 +97,8 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
     	
     	setSize(1024, 768);
     	//setVisible(true);
+    	setResizable(false);
+    	setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     	
     	home.addActionListener(this);
     	chat.addActionListener(this);
@@ -104,6 +106,15 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
     	// 로그인 
     	login.b1.addActionListener(this);
     	login.b2.addActionListener(this);
+    	
+    	// 채팅 
+    	cf.tf.addActionListener(this);//Enter
+    	// 쪽지보내기 
+    	
+    	// 로또 (멀티쓰레드)
+    	// 나가기
+        cf.b3.addActionListener(this);
+        
     }
     // 서버 연결 => 호출시기 (로그인 버튼 클릭시)
     public void connection(String id,String name,String sex)
@@ -133,6 +144,19 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
     	 */
     }
     // 서버로부터 응답을 받아서 출력하는 기능 
+    /*
+     *    switch()
+     *    {
+     *       case 1:
+     *       {
+     *         String name="";
+     *       }
+     *         break;
+     *       case 2:
+     *          String name="";
+     *          break;
+     *    }
+     */
     public void run()
     {
     	try
@@ -226,6 +250,24 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
 		else if(e.getSource()==login.b2)
 		{
 			System.exit(0);
+		}
+		else if(e.getSource()==cf.tf)
+		{
+			//1. 입력한 채팅문자열 읽기 
+			String msg=cf.tf.getText();
+			if(msg.length()<1)
+				return;
+			
+			String color=cf.box.getSelectedItem().toString();
+			// Object => String형변경 toString()
+			// (String)
+			try
+			{
+				out.write((Function.CHAT+"|"+msg+"|"+color+"\n").getBytes());// 서버로 전송 
+				
+			}catch(Exception ex) {}
+			cf.tf.setText("");
+			cf.box.setSelectedIndex(0);
 		}
 	}
 	

@@ -9,7 +9,7 @@ public class ChatForm extends JPanel{
    JTextField tf;
    JTable table;//테이블 모양 
    DefaultTableModel model;// 데이터 담당
-   JButton b1,b2;
+   JButton b1,b2,b3;
    public ChatForm()
    {
 	   pane=new JTextPane();
@@ -29,12 +29,14 @@ public class ChatForm extends JPanel{
 	   JScrollPane js2=new JScrollPane(table);
 	   
 	   b1=new JButton("쪽지보내기");
-	   b2=new JButton("운세보기");// 쓰레드 (로또운세)
+	   b2=new JButton("오늘의 로또");// 쓰레드 (로또운세)
+	   b3=new JButton("나가기");
 	   
 	   JPanel p=new JPanel();
-	   p.setLayout(new GridLayout(2,1,5,5));
+	   p.setLayout(new GridLayout(3,1,5,5));
 	   p.add(b1);
 	   p.add(b2);
+	   p.add(b3);
 	   // 배치 
 	   setLayout(null);
 	   // 사용자가 직접 배치 
