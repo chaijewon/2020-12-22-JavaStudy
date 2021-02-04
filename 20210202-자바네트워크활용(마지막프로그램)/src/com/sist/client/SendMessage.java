@@ -3,13 +3,13 @@ import javax.swing.*;
 import java.awt.*;
 public class SendMessage extends JFrame{
     JLabel la;
-    JTextField tf;
+    JComboBox tf;
     JTextArea ta;
     JButton b1,b2;
     public SendMessage()
     {
     	la=new JLabel("받는 사람");
-    	tf=new JTextField(10);
+    	tf=new JComboBox();
     	ta=new JTextArea();
     	JScrollPane js=new JScrollPane(ta);
     	b1=new JButton("쪽지보내기");
@@ -26,7 +26,7 @@ public class SendMessage extends JFrame{
     	add("South",p2);
     	
     	setSize(350,350);
-    	setVisible(true);
+    	//setVisible(true);
     	
     }
 	public static void main(String[] args) {

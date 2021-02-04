@@ -59,6 +59,9 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
 	ChatForm cf=new ChatForm();
 	// Login
 	Login login=new Login();
+	// 쪽지보내기
+	SendMessage sm=new SendMessage();
+	RecvMessage rm=new RecvMessage();
 	// 네트워크 
 	Socket s;
 	BufferedReader in;
@@ -110,11 +113,19 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
     	// 채팅 
     	cf.tf.addActionListener(this);//Enter
     	// 쪽지보내기 
-    	
+    	cf.b1.addActionListener(this);
+    	sm.b1.addActionListener(this);
+    	sm.b2.addActionListener(this);
+    	rm.b1.addActionListener(this);
+    	rm.b2.addActionListener(this);
     	// 로또 (멀티쓰레드)
     	// 나가기
         cf.b3.addActionListener(this);
         
+		/*
+		 * int temp=cf.model.getRowCount(); if(temp>1) { cf.b1.setEnabled(true); } else
+		 * { cf.b1.setEnabled(false); }
+		 */
     }
     // 서버 연결 => 호출시기 (로그인 버튼 클릭시)
     public void connection(String id,String name,String sex)
@@ -218,6 +229,15 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
     				  System.exit(0);
     			  }
     			  break;
+    			  case Function.SENDMESSAGE:
+    			  {
+    				  String youId=st.nextToken();
+    				  String strMsg=st.nextToken();
+    				  rm.tf.setText(youId);
+    				  rm.ta.setText(strMsg.replace("\t", "\n"));
+    				  rm.setVisible(true);
+    			  }
+    			  break;
     			}
     			
     		}
@@ -298,6 +318,59 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
 				// 클라이언트 ===>                   서버  ====> 클라이언트 
 				//       요청(Enter,버튼클릭,메뉴클릭)  요청 처리(결과값)   결과값을 출력 
 			}catch(Exception ex){}
+		}
+		else if(e.getSource()==cf.b1)
+		{
+			sm.tf.removeAllItems();
+			String str="";
+			for(int i=0;i<cf.model.getRowCount();i++)
+			{
+				String id=cf.model.getValueAt(i, 0).toString();
+				String yname=cf.model.getValueAt(i, 1).toString();
+				if(!name.equals(yname))
+				{
+					sm.tf.addItem(id);
+				}
+			}
+			sm.setVisible(true);
+		}
+		
+		else if(e.getSource()==sm.b1)
+		{
+			// 서버로 전송 
+			String strMsg=sm.ta.getText();
+			String youId=sm.tf.getSelectedItem().toString();
+			try
+			{
+				out.write((Function.SENDMESSAGE+"|"+strMsg.replace("\n", "\t")+"|"+youId+"\n").getBytes());
+			}catch(Exception ex) {}
+			sm.setVisible(false);
+		}
+		else if(e.getSource()==sm.b2)
+		{
+			sm.setVisible(false);
+		}
+		else if(e.getSource()==rm.b1)
+		{
+			sm.ta.setText("");
+			sm.tf.removeAllItems();
+			String str="";
+			for(int i=0;i<cf.model.getRowCount();i++)
+			{
+				String id=cf.model.getValueAt(i, 0).toString();
+				String yname=cf.model.getValueAt(i, 1).toString();
+				if(!name.equals(yname))
+				{
+					sm.tf.addItem(id);
+				}
+			}
+			sm.setVisible(true);
+			rm.setVisible(false);
+			
+		}
+		else if(e.getSource()==rm.b2)
+		{
+			rm.setVisible(false);
 		}
 	}
 	

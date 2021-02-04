@@ -138,6 +138,7 @@ public class Server implements Runnable{
 				{
 					// 클라이언트로부터 요청값 받기 
 					String msg=in.readLine(); // 100|id|name|sex
+					System.out.println("Client=>"+msg);// 서버 디버깅 
 					StringTokenizer st=new StringTokenizer(msg,"|");
 					int protocol=Integer.parseInt(st.nextToken());
 					switch(protocol)
@@ -168,7 +169,17 @@ public class Server implements Runnable{
 					   break;
 					   case Function.SENDMESSAGE://200  200|sid|rid|messge
 					   {
+						   String strMsg=st.nextToken();
+						   String youId=st.nextToken();
 						   
+						   for(Client client:waitVc)
+						   {
+							   if(youId.equals(client.id))
+							   {
+								   client.messageTo(Function.SENDMESSAGE+"|"+id+"|"+strMsg);
+								   break;
+							   }
+						   }
 					   }
 					   break;
 					   case Function.CHAT://300  300|message

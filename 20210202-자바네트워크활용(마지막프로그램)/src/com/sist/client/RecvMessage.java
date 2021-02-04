@@ -10,7 +10,9 @@ public class RecvMessage extends JFrame{
     {
     	la=new JLabel("보낸 사람");
     	tf=new JTextField(10);
+    	tf.setEnabled(false);
     	ta=new JTextArea();
+    	ta.setEnabled(false);
     	JScrollPane js=new JScrollPane(ta);
     	b1=new JButton("답장하기");
     	b2=new JButton("취소");
@@ -26,7 +28,7 @@ public class RecvMessage extends JFrame{
     	add("South",p2);
     	
     	setSize(350,350);
-    	setVisible(true);
+    	//setVisible(true);
     	
     }
 	public static void main(String[] args) {
