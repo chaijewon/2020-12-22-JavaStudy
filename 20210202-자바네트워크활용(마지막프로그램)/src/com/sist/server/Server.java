@@ -99,7 +99,8 @@ public class Server implements Runnable{
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+        Server server=new Server();
+        new Thread(server).start();
 	}
 	
 	// 통신만 담당하는 클래스 => 접속자마다 따로 생성 => 여러개가 동시에 동작 (쓰레드)
