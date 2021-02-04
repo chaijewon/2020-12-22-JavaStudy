@@ -198,6 +198,26 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
     				  append(st.nextToken(),st.nextToken());
     			  }
     			  break;
+    			  case Function.EXIT:
+    			  {
+    				  String id=st.nextToken();
+    				  String str="";
+    				  for(int i=0;i<cf.model.getRowCount();i++)
+    				  {
+    					  str=cf.model.getValueAt(i, 0).toString();
+    					  if(id.equals(str))
+    					  {
+    						  cf.model.removeRow(i);
+    						  break;
+    					  }
+    				  }
+    			  }
+    			  break;
+    			  case Function.MYEXIT:
+    			  {
+    				  System.exit(0);
+    			  }
+    			  break;
     			}
     			
     		}
@@ -268,6 +288,16 @@ public class MovieMainFrame extends JFrame implements ActionListener,Runnable{
 			}catch(Exception ex) {}
 			cf.tf.setText("");
 			cf.box.setSelectedIndex(0);
+		}
+		else if(e.getSource()==cf.b3)// 나가기 버튼 
+		{
+			try
+			{
+				out.write((Function.EXIT+"|\n").getBytes());// 서버로 전송 (서버에서 처리)
+				// readLine() => 패킷을 받을때 \n
+				// 클라이언트 ===>                   서버  ====> 클라이언트 
+				//       요청(Enter,버튼클릭,메뉴클릭)  요청 처리(결과값)   결과값을 출력 
+			}catch(Exception ex){}
 		}
 	}
 	

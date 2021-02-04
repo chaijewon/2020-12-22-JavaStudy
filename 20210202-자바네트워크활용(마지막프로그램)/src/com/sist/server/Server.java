@@ -179,6 +179,37 @@ public class Server implements Runnable{
 						  // 접속한 모든 사람에게 보낸다 
 						  messageAll(Function.CHAT+"|["+name+"]"+strMsg+"|"+color);
 					   }
+					   break;
+					   case Function.EXIT:
+					   {
+						   // 1. 접속된 모든 사람에게 나간다는 메세지 전송 
+						   for(Client client:waitVc)// 접속한 사람의 정보 : waitVc
+						   {
+							   // id => 나가는 사람 => this
+							   if(!id.equals(client.id))
+							   {
+								   client.messageTo(Function.CHAT+"|[알림 ☞] "+name+"님이 퇴장하셨습니다|red");
+								   client.messageTo(Function.EXIT+"|"+id);//테이블에 출력된 명단에 제거
+							   }
+						   }
+						   // => 남아 있는 사람 , 나가는 사람 처리 
+						   for(int i=0;i<waitVc.size();i++)
+						   {
+							   Client client=waitVc.get(i);
+							   if(id.equals(client.id))
+							   {
+								   // 윈도우 종료해라 
+								   messageTo(Function.MYEXIT+"|");
+								   // waitVc에서 제거 
+								   waitVc.remove(i);
+								   // in,out.close()
+								   in.close();
+								   out.close();
+								   break;// 종료 
+							   }
+						   }
+					   }
+					   break;
 					}
 					
 				}
